@@ -14,9 +14,10 @@ import { FcDataConfiguration } from 'react-icons/fc';
 export default function Home() {
     const [livros, setLivros] = useState([]);
     const [selectLivro, setSelectLivro] = useState([]);
-    const [pesquisa,setPesquisa]= useState('');
-    const [paramsPesq,setParamsPesq]= useState('titulo');
-  
+    const [pesquisa, setPesquisa] = useState('');
+    const [paramsPesq, setParamsPesq] = useState('titulo');
+    const [filterPesquisa,setFilterPesquisa]= useState([]);
+
 
 
     useEffect(() => {
@@ -27,16 +28,25 @@ export default function Home() {
         loadLivros();
     }, []);
 
+    const lowerPesquisa = pesquisa.toLocaleLowerCase();
+    useEffect(() => {
 
-     function handlePesquisar(){
-        if(paramsPesq==='titulo'){
-            setPesquisa(...livros.filter((livro) =>
-            livro.titulo === paramsPesq
-        ));
+        function loadPesquisa() {
+           if(pesquisa!==''){
+            setFilterPesquisa(
+                Object.values(livros).filter((item) =>
+                    item.titulo.toLocaleLowerCase().includes(lowerPesquisa)
 
+                )
+            )
+           }
         }
-     }
-     
+        loadPesquisa();
+
+    }, [lowerPesquisa, livros]);
+
+
+    console.log(filterPesquisa)
 
     function handleFavorito(id) {
 
@@ -82,11 +92,11 @@ export default function Home() {
                     <form>
                         <label htmlFor='pesquisar'>Pesquisar :</label>
                         <input name='pesquisar'
-                         id='pesquisar' 
-                         placeholder={`Pesquisar por ${paramsPesq}`}
-                         onChange={(e)=>setPesquisa(e.target.value)}
-                         value={pesquisa}
-                         />
+                            id='pesquisar'
+                            placeholder={`Pesquisar por ${paramsPesq}`}
+                            onChange={(e) => setPesquisa(e.target.value)}
+                            value={pesquisa}
+                        />
                     </form>
                     <>
                         <S.MyButtonPesq>
@@ -98,8 +108,8 @@ export default function Home() {
 
                             <S.MyButtonPesq.Menu className='menu'>
 
-                                <S.MyButtonPesq.Item onClick={(e)=>setParamsPesq('id')} className='id'>Id</S.MyButtonPesq.Item>
-                                <S.MyButtonPesq.Item  className='titulo' onClick={(e)=>setParamsPesq('titulo')}>Titulo</S.MyButtonPesq.Item>
+                                <S.MyButtonPesq.Item onClick={(e) => setParamsPesq('id')} className='id'>Id</S.MyButtonPesq.Item>
+                                <S.MyButtonPesq.Item className='titulo' onClick={(e) => setParamsPesq('titulo')}>Titulo</S.MyButtonPesq.Item>
 
                             </S.MyButtonPesq.Menu>
 
