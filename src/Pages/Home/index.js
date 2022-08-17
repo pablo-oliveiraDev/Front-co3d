@@ -16,7 +16,8 @@ export default function Home() {
     const [selectLivro, setSelectLivro] = useState([]);
     const [pesquisa, setPesquisa] = useState('');
     const [paramsPesq, setParamsPesq] = useState('titulo');
-    const [filterPesquisa,setFilterPesquisa]= useState([]);
+    const [filterTitulo, setFilterTitulo] = useState([]);
+    const [filterId, setFilterId] = useState([]);
 
 
 
@@ -32,21 +33,38 @@ export default function Home() {
     useEffect(() => {
 
         function loadPesquisa() {
-           if(pesquisa!==''){
-            setFilterPesquisa(
-                Object.values(livros).filter((item) =>
-                    item.titulo.toLocaleLowerCase().includes(lowerPesquisa)
+            if (pesquisa !== '' && paramsPesq === 'titulo') {
+                setFilterTitulo(
+                    Object.values(livros).filter((item) =>
+                        item.titulo.toLocaleLowerCase().includes(lowerPesquisa)
 
+                    )
                 )
-            )
-           }
+            }
         }
         loadPesquisa();
 
     }, [lowerPesquisa, livros]);
 
+    useEffect(() => {
 
-    console.log(filterPesquisa)
+        function loadPesquisaId() {
+            if (pesquisa !== '' && paramsPesq === 'id') {
+                setFilterId(
+                    Object.values(livros).filter((item) =>
+                        item.id.toLocaleLowerCase().includes(lowerPesquisa)
+
+                    )
+                )
+            }
+        }
+        loadPesquisaId();
+
+    }, [lowerPesquisa, livros]);
+
+
+
+    console.log(filterId)
 
     function handleFavorito(id) {
 
@@ -121,7 +139,7 @@ export default function Home() {
 
 
 
-                {livros.map((livro, index, arr) => {
+                {pesquisa === '' && (livros.map((livro, index, arr) => {
                     return (
 
                         <S.CardLivro key={livro.id}>
@@ -142,8 +160,52 @@ export default function Home() {
                         </S.CardLivro>
 
                     )
-                })}
+                }))}
+                {pesquisa !== '' && paramsPesq === 'titulo' && (filterTitulo.map((livro, index, arr) => {
+                    return (
 
+                        <S.CardLivro key={livro.id}>
+                            <S.MyCard style={{ width: '18rem' }}  >
+                                <S.MyCard.Img variant="top" src="holder.js/100px180" onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
+                                <S.MyCard.Body>
+                                    <S.MyCard.Title className='titulo'>{livro.titulo}
+                                        <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
+                                    </S.MyCard.Title>
+                                    <S.MyCard.Text>
+                                        Some quick example text to build on the S.Mycard title and make up the
+                                        bulk of the S.Mycard's content.
+                                    </S.MyCard.Text>
+                                    <S.MyButtom variant="primary">Go somewhere</S.MyButtom>
+
+                                </S.MyCard.Body>
+                            </S.MyCard>
+                        </S.CardLivro>
+
+                    )
+                }))}
+
+                {pesquisa !== '' && paramsPesq === 'id' && (filterId.map((livro, index, arr) => {
+                    return (
+
+                        <S.CardLivro key={livro.id}>
+                            <S.MyCard style={{ width: '18rem' }}  >
+                                <S.MyCard.Img variant="top" src="holder.js/100px180" onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
+                                <S.MyCard.Body>
+                                    <S.MyCard.Title className='titulo'>{livro.titulo}
+                                        <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
+                                    </S.MyCard.Title>
+                                    <S.MyCard.Text>
+                                        Some quick example text to build on the S.Mycard title and make up the
+                                        bulk of the S.Mycard's content.
+                                    </S.MyCard.Text>
+                                    <S.MyButtom variant="primary">Go somewhere</S.MyButtom>
+
+                                </S.MyCard.Body>
+                            </S.MyCard>
+                        </S.CardLivro>
+
+                    )
+                }))}
 
 
             </S.MyCol>

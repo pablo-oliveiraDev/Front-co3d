@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as S from '../../Style/Header';
-import CO3D from '../../assets/Image/co3d.png'
+import CO3D from '../../assets/Image/co3d.png';
 
 
 
