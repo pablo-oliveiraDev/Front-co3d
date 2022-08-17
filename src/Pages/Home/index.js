@@ -6,6 +6,7 @@ import api from '../../Services/Api';
 import { BsFillStarFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { FcDataConfiguration } from 'react-icons/fc';
+import { BiCommentAdd } from 'react-icons/bi';
 
 
 
@@ -44,7 +45,7 @@ export default function Home() {
         }
         loadPesquisa();
 
-    }, [lowerPesquisa, livros]);
+    }, [lowerPesquisa, livros, pesquisa, paramsPesq]);
 
     useEffect(() => {
 
@@ -60,7 +61,7 @@ export default function Home() {
         }
         loadPesquisaId();
 
-    }, [lowerPesquisa, livros]);
+    }, [lowerPesquisa, livros, pesquisa, paramsPesq]);
 
 
 
@@ -150,10 +151,9 @@ export default function Home() {
                                         <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
                                     </S.MyCard.Title>
                                     <S.MyCard.Text>
-                                        Some quick example text to build on the S.Mycard title and make up the
-                                        bulk of the S.Mycard's content.
+                                        {livro.descricao}
                                     </S.MyCard.Text>
-                                    <S.MyButtom variant="primary">Go somewhere</S.MyButtom>
+                                    <S.MyButtom variant="primary"><BiCommentAdd color='#fff' size={25} /></S.MyButtom>
 
                                 </S.MyCard.Body>
                             </S.MyCard>
@@ -175,7 +175,7 @@ export default function Home() {
                                         Some quick example text to build on the S.Mycard title and make up the
                                         bulk of the S.Mycard's content.
                                     </S.MyCard.Text>
-                                    <S.MyButtom variant="primary">Go somewhere</S.MyButtom>
+                                    <S.MyButtom ><BiCommentAdd color='#fff' size={25} /></S.MyButtom>
 
                                 </S.MyCard.Body>
                             </S.MyCard>
@@ -198,7 +198,7 @@ export default function Home() {
                                         Some quick example text to build on the S.Mycard title and make up the
                                         bulk of the S.Mycard's content.
                                     </S.MyCard.Text>
-                                    <S.MyButtom variant="primary">Go somewhere</S.MyButtom>
+                                    <S.MyButtom variant="primary"><BiCommentAdd color='#fff' size={25} /></S.MyButtom>
 
                                 </S.MyCard.Body>
                             </S.MyCard>
@@ -207,7 +207,18 @@ export default function Home() {
                     )
                 }))}
 
+                {pesquisa !== '' && filterId && (
 
+
+                    <S.EmptyFilters >
+                        <h1>O livro que esta pesquisando ainda no nosso acervo!</h1>
+                    </S.EmptyFilters>
+
+
+                )}
+
+
+               
             </S.MyCol>
 
         </S.MyContainer >

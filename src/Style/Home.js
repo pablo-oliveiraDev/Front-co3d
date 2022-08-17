@@ -73,18 +73,18 @@ export const CardLivro = styled.div`
 `;
 export const MyButtom = styled(Button)`
 
-`;
-export const MyFavorites = styled(Button)`
-color:#ff0;
-float:right;
+ `;
+    export const MyFavorites = styled(Button)`
+    color:#ff0;
+    float:right;
 
-`;
-export const MyCard = styled(Card)`
-display:flex;
-background:#fff;
-color: #000;
-margin: 20px 30px;
-align-items:center;
+ `;
+    export const MyCard = styled(Card)`
+    display:flex;
+    background:#fff;
+    color: #000;
+    margin: 20px 30px;
+    align-items:center;
 
 
 img{
@@ -93,6 +93,17 @@ img{
     width:250px;
     height:250px;
 }
+`;
+export const EmptyFilters = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    background:#200;
+    h1{
+        display:flex;
+        flex-direction:column;
+    }
 `;
 
 
