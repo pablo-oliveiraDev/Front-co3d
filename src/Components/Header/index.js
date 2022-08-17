@@ -15,7 +15,7 @@ export default function Header() {
         <S.Header>
             <S.MyNavbar expand="lg" variant="dark" fixed="top" >
                 <S.MyContainer >
-                    <S.MyNavbar.Brand className="titulo">CO3D<img src={CO3D} /></S.MyNavbar.Brand>
+                    <S.MyNavbar.Brand className="titulo">CO3D<img src={CO3D} alt='imagem header'/></S.MyNavbar.Brand>
                     <S.MyNavbar.Toggle aria-controls="basic-navbar-nav" />
                     <S.MyNavbar.Collapse id="basic-navbar-nav">
 

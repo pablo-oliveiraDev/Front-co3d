@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import {Link} from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 export const MyPesquisa = styled.div`
@@ -85,14 +84,26 @@ export const MyButtom = styled(Button)`
     color: #000;
     margin: 20px 30px;
     align-items:center;
+    .titulo{
+        display:flex;
+        flex-direction:row;
+        justify-content:space-around;
+        align-items:center;
+        width:100%;
 
+    }
 
-img{
-    margin-top:10px;
-    background: #1c1c1c;
-    width:250px;
-    height:250px;
-}
+    img{
+        margin-top:10px;
+        background: #1c1c1c;
+        width:250px;
+        height:250px;
+    }
+
+    .descricao{
+        height:100px;
+        width:200px;
+    }
 `;
 export const EmptyFilters = styled.div`
     display:flex;
@@ -103,6 +114,8 @@ export const EmptyFilters = styled.div`
     h1{
         display:flex;
         flex-direction:column;
+        text-align:center;
+        margin: 30px;
     }
 `;
 

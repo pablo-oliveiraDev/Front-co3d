@@ -148,13 +148,13 @@ export default function Home() {
                                 <S.MyCard.Img variant="top" src="holder.js/100px180" onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
                                 <S.MyCard.Body>
                                     <S.MyCard.Title className='titulo'>{livro.titulo}
-                                        <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
+
                                     </S.MyCard.Title>
-                                    <S.MyCard.Text>
+                                    <S.MyCard.Text className='descricao'>Descrição :<br />
                                         {livro.descricao}
                                     </S.MyCard.Text>
-                                    <S.MyButtom variant="primary"><BiCommentAdd color='#fff' size={25} /></S.MyButtom>
-
+                                    <S.MyButtom variant="primary"><BiCommentAdd color='#fff' size={35} /></S.MyButtom>
+                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
                                 </S.MyCard.Body>
                             </S.MyCard>
                         </S.CardLivro>
@@ -169,14 +169,13 @@ export default function Home() {
                                 <S.MyCard.Img variant="top" src="holder.js/100px180" onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
                                 <S.MyCard.Body>
                                     <S.MyCard.Title className='titulo'>{livro.titulo}
-                                        <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
-                                    </S.MyCard.Title>
-                                    <S.MyCard.Text>
-                                        Some quick example text to build on the S.Mycard title and make up the
-                                        bulk of the S.Mycard's content.
-                                    </S.MyCard.Text>
-                                    <S.MyButtom ><BiCommentAdd color='#fff' size={25} /></S.MyButtom>
 
+                                    </S.MyCard.Title>
+                                    <S.MyCard.Text className='descricao'>
+                                        {livro.descricao}
+                                    </S.MyCard.Text>
+                                    <S.MyButtom ><BiCommentAdd color='#fff' size={35} /></S.MyButtom>
+                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
                                 </S.MyCard.Body>
                             </S.MyCard>
                         </S.CardLivro>
@@ -192,14 +191,13 @@ export default function Home() {
                                 <S.MyCard.Img variant="top" src="holder.js/100px180" onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
                                 <S.MyCard.Body>
                                     <S.MyCard.Title className='titulo'>{livro.titulo}
-                                        <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
-                                    </S.MyCard.Title>
-                                    <S.MyCard.Text>
-                                        Some quick example text to build on the S.Mycard title and make up the
-                                        bulk of the S.Mycard's content.
-                                    </S.MyCard.Text>
-                                    <S.MyButtom variant="primary"><BiCommentAdd color='#fff' size={25} /></S.MyButtom>
 
+                                    </S.MyCard.Title>
+                                    <S.MyCard.Text className='descricao'>
+                                        {livro.descricao}
+                                    </S.MyCard.Text>
+                                    <S.MyButtom variant="primary"><BiCommentAdd color='#fff' size={35} /></S.MyButtom>
+                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
                                 </S.MyCard.Body>
                             </S.MyCard>
                         </S.CardLivro>
@@ -211,14 +209,14 @@ export default function Home() {
 
 
                     <S.EmptyFilters >
-                        <h1>O livro que esta pesquisando ainda no nosso acervo!</h1>
+                        <h1>O livro que esta pesquisando ainda não consta em nosso acervo!😥</h1>
                     </S.EmptyFilters>
 
 
                 )}
 
 
-               
+
             </S.MyCol>
 
         </S.MyContainer >
