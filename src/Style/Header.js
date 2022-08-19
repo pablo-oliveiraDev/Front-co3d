@@ -26,8 +26,8 @@ export const MyNavbar = styled(Navbar)`
     margin-right:150px;
     text-align:center;
     img{
-        width:70px;
-        height:70px;
+        width:60px;
+        height:60px;
     }
     
 }

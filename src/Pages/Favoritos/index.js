@@ -1,38 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import * as S from '../../Style/Favoritos';
 import SemImage from '../../assets/Image/erro.png';
-import api from '../../Services/Api';
 import { toast } from 'react-toastify';
+import {GoTrashcan} from 'react-icons/go';
 
 export default function Favoritos() {
     const [favorLivros, setFavorLivros] = useState([]);
 
 
     useEffect(() => {
+
         const minhaLista = localStorage.getItem('livros');
         setFavorLivros(JSON.parse(minhaLista) || []);
+
+
     }, []);
-    
+
+
+
+    function handleSoftDelete(id) {
+
+        let filtroLivros =
+            favorLivros.filter((livro) => {
+                return (livro.id !== id)
+            });
+
+
+        
+
+        setFavorLivros(filtroLivros);
+        localStorage.setItem('livros', JSON.stringify(filtroLivros));
+        toast.success('Filme excluido com sucesso!👍🏼')
+
+
+
+
+
+
+    }
 
     return (
         < S.MyContainer >
             <S.MyCol >
 
-                {Object.values(favorLivros).map((livro) => {
-                   
+                {favorLivros && Object.values(favorLivros).map((livro, index, arr) => {
+
                     return (
-                        <S.CardLivro key={livro.id}>
-                            <S.MyCard style={{ width: '18rem' }}  >
+                        <S.CardLivro key={index}>
+                            <S.MyCard style={{ width: '16rem' }}  >
                                 <S.MyCard.Img variant="top" src="holder.js/100px180" onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
                                 <S.MyCard.Body>
                                     <S.MyCard.Title className='titulo'>{livro.titulo}
 
                                     </S.MyCard.Title>
                                     <S.MyCard.Text>
-                                        Some quick example text to build on the S.Mycard title and make up the
-                                        bulk of the S.Mycard's content.
+                                        {livro.descricao}
                                     </S.MyCard.Text>
-                                    <S.MyButtom variant="primary">Go somewhere</S.MyButtom>
+                                    <S.MyButtom variant="primary" onClick={() => handleSoftDelete(livro.id)} ><GoTrashcan color='#fff' size={35}/></S.MyButtom>
 
                                 </S.MyCard.Body>
                             </S.MyCard>
@@ -41,7 +65,15 @@ export default function Favoritos() {
                     );
                 })}
 
+                {favorLivros.length===0 &&
 
+
+                    <S.EmptyFilters >
+                        <h1>Você ainda não possui livro/s salvo em seu Favoritos!😥</h1>
+                    </S.EmptyFilters>
+
+
+                }
 
             </S.MyCol>
 

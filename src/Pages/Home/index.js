@@ -6,7 +6,7 @@ import api from '../../Services/Api';
 import { BsFillStarFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { FcDataConfiguration } from 'react-icons/fc';
-import { BiCommentAdd } from 'react-icons/bi';
+import CadastroModal from '../../Components/CadastroModal';
 
 
 
@@ -19,6 +19,7 @@ export default function Home() {
     const [paramsPesq, setParamsPesq] = useState('titulo');
     const [filterTitulo, setFilterTitulo] = useState([]);
     const [filterId, setFilterId] = useState([]);
+
 
 
 
@@ -65,7 +66,7 @@ export default function Home() {
 
 
 
-    console.log(filterId)
+
 
     function handleFavorito(id) {
 
@@ -87,10 +88,7 @@ export default function Home() {
             toast.info(`Voce ja possui o livro ${selectLivro.titulo} em seu favorito🤩`);
             return;
         }
-        // if (selectLivro) {
-        //     toast.info('lista vazia!');
-        //     return;
-        // }
+
 
         livrosSalvos.push(selectLivro);
         localStorage.setItem('livros', JSON.stringify(livrosSalvos));
@@ -144,8 +142,8 @@ export default function Home() {
                     return (
 
                         <S.CardLivro key={livro.id}>
-                            <S.MyCard style={{ width: '18rem' }}  >
-                                <S.MyCard.Img variant="top" src="holder.js/100px180" onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
+                            <S.MyCard style={{ width: '16rem' }}  >
+                                <S.MyCard.Img variant="top" src={livros.linkCapa} onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
                                 <S.MyCard.Body>
                                     <S.MyCard.Title className='titulo'>{livro.titulo}
 
@@ -153,8 +151,8 @@ export default function Home() {
                                     <S.MyCard.Text className='descricao'>Descrição :<br />
                                         {livro.descricao}
                                     </S.MyCard.Text>
-                                    <S.MyButtom variant="primary"><BiCommentAdd color='#fff' size={35} /></S.MyButtom>
-                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
+                                    <CadastroModal />
+                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill color='#fff' size={35} /></S.MyFavorites>
                                 </S.MyCard.Body>
                             </S.MyCard>
                         </S.CardLivro>
@@ -166,7 +164,7 @@ export default function Home() {
 
                         <S.CardLivro key={livro.id}>
                             <S.MyCard style={{ width: '18rem' }}  >
-                                <S.MyCard.Img variant="top" src="holder.js/100px180" onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
+                                <S.MyCard.Img variant="top" src='sem' onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
                                 <S.MyCard.Body>
                                     <S.MyCard.Title className='titulo'>{livro.titulo}
 
@@ -174,8 +172,8 @@ export default function Home() {
                                     <S.MyCard.Text className='descricao'>
                                         {livro.descricao}
                                     </S.MyCard.Text>
-                                    <S.MyButtom ><BiCommentAdd color='#fff' size={35} /></S.MyButtom>
-                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
+                                    <CadastroModal />
+                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill color='#fff' size={35} /></S.MyFavorites>
                                 </S.MyCard.Body>
                             </S.MyCard>
                         </S.CardLivro>
@@ -187,8 +185,8 @@ export default function Home() {
                     return (
 
                         <S.CardLivro key={livro.id}>
-                            <S.MyCard style={{ width: '18rem' }}  >
-                                <S.MyCard.Img variant="top" src="holder.js/100px180" onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
+                            <S.MyCard style={{ width: '13rem' }}  >
+                                <S.MyCard.Img variant="top" src={livro.linkCapa} onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
                                 <S.MyCard.Body>
                                     <S.MyCard.Title className='titulo'>{livro.titulo}
 
@@ -196,8 +194,8 @@ export default function Home() {
                                     <S.MyCard.Text className='descricao'>
                                         {livro.descricao}
                                     </S.MyCard.Text>
-                                    <S.MyButtom variant="primary"><BiCommentAdd color='#fff' size={35} /></S.MyButtom>
-                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill size={35} /></S.MyFavorites>
+                                    <CadastroModal />
+                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)}  > < BsFillStarFill size={35} color='#fff' /></S.MyFavorites>
                                 </S.MyCard.Body>
                             </S.MyCard>
                         </S.CardLivro>
@@ -205,7 +203,9 @@ export default function Home() {
                     )
                 }))}
 
-                {pesquisa !== '' && filterId && (
+                
+
+                {pesquisa !== '' && (filterTitulo.length === 0 && filterId.length === 0) && (
 
 
                     <S.EmptyFilters >
@@ -214,7 +214,6 @@ export default function Home() {
 
 
                 )}
-
 
 
             </S.MyCol>

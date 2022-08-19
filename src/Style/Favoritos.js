@@ -66,5 +66,19 @@ img{
 `;
 
 
+export const EmptyFilters = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    background:#200;
+    h1{
+        display:flex;
+        flex-direction:column;
+        text-align:center;
+        margin: 30px;
+    }
+`;
+
 
 

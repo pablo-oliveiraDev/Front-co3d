@@ -71,12 +71,12 @@ export const CardLivro = styled.div`
     float:left;
 `;
 export const MyButtom = styled(Button)`
-
+float:left;
  `;
     export const MyFavorites = styled(Button)`
-    color:#ff0;
+    
     float:right;
-
+   
  `;
     export const MyCard = styled(Card)`
     display:flex;
@@ -95,9 +95,9 @@ export const MyButtom = styled(Button)`
 
     img{
         margin-top:10px;
-        background: #1c1c1c;
-        width:250px;
-        height:250px;
+        src={livros.linkCapa}
+        width:200px;
+        height:200px;
     }
 
     .descricao{
