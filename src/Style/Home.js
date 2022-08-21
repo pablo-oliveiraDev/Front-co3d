@@ -24,12 +24,36 @@ export const MyPesquisa = styled.div`
         width:400px;
         text-align:center;
     }
+    @media(max-width:900px){
+        
+        
+        margin:0;
+        
+        height:100%;
+        
+        flex-wrap:wrap;
 
+        label{
+            display:none;
+            
+        }
+        input{
+            width:100%;
+        }
+
+    }
 
 `;
 
 export const MyButtonPesq = styled(Dropdown)`
 margin-left:1ch;
+margin-right:100px;
+
+@media(max-width:900px){
+    margin-right:1ch;
+    margin-left:1ch;
+    
+}
 `;
 
 
@@ -95,14 +119,13 @@ float:left;
 
     img{
         margin-top:10px;
-        src={livros.linkCapa}
+        background: #1c1c1c;
         width:200px;
         height:200px;
     }
 
     .descricao{
-        height:100px;
-        width:200px;
+        
     }
 `;
 export const EmptyFilters = styled.div`
@@ -119,6 +142,16 @@ export const EmptyFilters = styled.div`
     }
 `;
 
+export const MyBtnCards = styled.div`
+    display:flex;
+    justify-content:space-around;
+    width:100%;
+    margin: 0;
 
+
+`;
+export const MyDivtext = styled.div`
+
+`;
 
 

@@ -1,12 +1,14 @@
 import React from 'react';
 import * as S from '../../Style/Home';
-import SemImage from '../../assets/Image/erro.png';
+import imglivro from '../../assets/Image/co3d.png';
 import { useEffect, useState } from 'react';
 import api from '../../Services/Api';
 import { BsFillStarFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { FcDataConfiguration } from 'react-icons/fc';
 import CadastroModal from '../../Components/CadastroModal';
+import UpDeleteModal from '../../Components/UpDeleteModal';
+import FooterPages from '../../Components/FooterPages';
 
 
 
@@ -19,16 +21,35 @@ export default function Home() {
     const [paramsPesq, setParamsPesq] = useState('titulo');
     const [filterTitulo, setFilterTitulo] = useState([]);
     const [filterId, setFilterId] = useState([]);
+    const [itemsPerPage, setItemsPerPage] = useState(12);
+    const [currentPage, setCurrentPage] = useState(0);
+    const [substrDescr, setSubstrDescr] = useState(10);
+    const [substrTitulo, setSubstrTitulo] = useState(18);
+
+
+
+
+
+    const pages = Math.ceil(livros.length / itemsPerPage);
+    const startIndex = currentPage * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentItems = livros.slice(startIndex, endIndex)
+
 
 
 
 
     useEffect(() => {
+
         async function loadLivros() {
+
             const response = await api.get('/livros');
             setLivros(response.data);
         }
+
         loadLivros();
+
+
     }, []);
 
     const lowerPesquisa = pesquisa.toLocaleLowerCase();
@@ -71,7 +92,7 @@ export default function Home() {
     function handleFavorito(id) {
 
 
-        setSelectLivro(...livros.filter((livro) =>
+        setSelectLivro(...livros.filter((livro,index,arr) =>
             livro.id === id
         ));
 
@@ -87,6 +108,7 @@ export default function Home() {
 
             toast.info(`Voce ja possui o livro ${selectLivro.titulo} em seu favorito🤩`);
             return;
+
         }
 
 
@@ -131,28 +153,51 @@ export default function Home() {
                             </S.MyButtonPesq.Menu>
 
                         </S.MyButtonPesq>
-
+                        <CadastroModal />
 
                     </>
                 </S.MyPesquisa>
 
 
 
-                {pesquisa === '' && (livros.map((livro, index, arr) => {
+
+
+
+                {pesquisa === '' && (currentItems.map((livro, index, arr) => {
                     return (
 
                         <S.CardLivro key={livro.id}>
                             <S.MyCard style={{ width: '16rem' }}  >
-                                <S.MyCard.Img variant="top" src={livros.linkCapa} onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
+                                <S.MyCard.Img variant="top" src={imglivro} />
                                 <S.MyCard.Body>
-                                    <S.MyCard.Title className='titulo'>{livro.titulo}
+                                    <S.MyCard.Title className='titulo'
+                                        onMouseOver={() => setSubstrTitulo(livro.titulo.length)}
+                                        onMouseOut={() => setSubstrTitulo(18)}
+                                    >
+                                        {livro.titulo.substring(0, substrTitulo)}
 
                                     </S.MyCard.Title>
-                                    <S.MyCard.Text className='descricao'>Descrição :<br />
-                                        {livro.descricao}
+
+                                    <S.MyCard.Text className='descricao'>
+                                        <span onMouseOver={() => setSubstrDescr(livro.descricao.length)}
+                                            onMouseOut={() => setSubstrDescr(10)}
+                                        >Descrição :{livro.descricao.substring(0, substrDescr)}</span>
                                     </S.MyCard.Text>
-                                    <CadastroModal />
-                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill color='#fff' size={35} /></S.MyFavorites>
+                                    <S.MyCard.Text>
+                                        <span>Autor: {livro.autor}</span>
+
+                                    </S.MyCard.Text>
+                                    <S.MyCard.Text>
+                                    <span>Enviado por: {livro.nome}</span>
+                                    </S.MyCard.Text>
+
+
+                                        
+                                    <S.MyBtnCards>
+
+                                        <UpDeleteModal dataLivro={livro} />
+                                        <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill color='#fff' size={35} /></S.MyFavorites>
+                                    </S.MyBtnCards>
                                 </S.MyCard.Body>
                             </S.MyCard>
                         </S.CardLivro>
@@ -164,16 +209,31 @@ export default function Home() {
 
                         <S.CardLivro key={livro.id}>
                             <S.MyCard style={{ width: '18rem' }}  >
-                                <S.MyCard.Img variant="top" src='sem' onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
+                                <S.MyCard.Img variant="top" src={imglivro} />
                                 <S.MyCard.Body>
-                                    <S.MyCard.Title className='titulo'>{livro.titulo}
+                                    <S.MyCard.Title className='titulo'
+                                        onMouseOver={() => setSubstrTitulo(livro.titulo.length)}
+                                        onMouseOut={() => setSubstrTitulo(18)}
+                                    >
+                                        {livro.titulo.substring(0, substrTitulo)}
 
                                     </S.MyCard.Title>
                                     <S.MyCard.Text className='descricao'>
-                                        {livro.descricao}
+                                        <span onMouseOver={() => setSubstrDescr(livro.descricao.length)}
+                                            onMouseOut={() => setSubstrDescr(10)}
+                                        >Descrição :{livro.descricao.substring(0, substrDescr)}</span>
+                                        <div >
+                                            <span>Autor: {livro.autor}</span>
+                                        </div>
+                                        <div>
+                                            <span>Enviado por: {livro.nome}</span>
+                                        </div>
                                     </S.MyCard.Text>
-                                    <CadastroModal />
-                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill color='#fff' size={35} /></S.MyFavorites>
+                                    <S.MyBtnCards>
+
+                                        <UpDeleteModal dataLivro={livro.id} />
+                                        <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill color='#fff' size={35} /></S.MyFavorites>
+                                    </S.MyBtnCards>
                                 </S.MyCard.Body>
                             </S.MyCard>
                         </S.CardLivro>
@@ -186,16 +246,31 @@ export default function Home() {
 
                         <S.CardLivro key={livro.id}>
                             <S.MyCard style={{ width: '13rem' }}  >
-                                <S.MyCard.Img variant="top" src={livro.linkCapa} onError={(e) => { e.target.onError = null; e.target.src = SemImage }} />
+                                <S.MyCard.Img variant="top" src={imglivro} />
                                 <S.MyCard.Body>
-                                    <S.MyCard.Title className='titulo'>{livro.titulo}
+                                    <S.MyCard.Title className='titulo'
+                                        onMouseOver={() => setSubstrTitulo(livro.titulo.length)}
+                                        onMouseOut={() => setSubstrTitulo(18)}
+                                    >
+                                        {livro.titulo.substring(0, substrTitulo)}
 
                                     </S.MyCard.Title>
                                     <S.MyCard.Text className='descricao'>
-                                        {livro.descricao}
+                                        <span onMouseOver={() => setSubstrDescr(livro.descricao.length)}
+                                            onMouseOut={() => setSubstrDescr(10)}
+                                        >Descrição :{livro.descricao.substring(0, substrDescr)}</span>
+                                        <div >
+                                            <span>Autor: {livro.autor}</span>
+                                        </div>
+                                        <div>
+                                            <span>Enviado por: {livro.nome}</span>
+                                        </div>
                                     </S.MyCard.Text>
-                                    <CadastroModal />
-                                    <S.MyFavorites onClick={() => handleFavorito(livro.id)}  > < BsFillStarFill size={35} color='#fff' /></S.MyFavorites>
+                                    <S.MyBtnCards>
+
+                                        <UpDeleteModal dataLivro={livro} />
+                                        <S.MyFavorites onClick={() => handleFavorito(livro.id)} > <BsFillStarFill color='#fff' size={35} /></S.MyFavorites>
+                                    </S.MyBtnCards>
                                 </S.MyCard.Body>
                             </S.MyCard>
                         </S.CardLivro>
@@ -203,7 +278,7 @@ export default function Home() {
                     )
                 }))}
 
-                
+
 
                 {pesquisa !== '' && (filterTitulo.length === 0 && filterId.length === 0) && (
 
@@ -215,7 +290,10 @@ export default function Home() {
 
                 )}
 
-
+                <FooterPages setCurrentPage={setCurrentPage}
+                    pages={pages}
+                    currentPage={currentPage}
+                />
             </S.MyCol>
 
         </S.MyContainer >

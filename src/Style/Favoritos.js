@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
- 
+
 
 export const MyContainer = styled(Container)`
     
@@ -45,24 +45,27 @@ export const MyButtom = styled(Button)`
 
 `;
 export const MyFavorites = styled(Link)`
-color:#ff0;
-float:right;
+    color:#ff0;
+    float:right;
 
 `;
 export const MyCard = styled(Card)`
-display:flex;
-background:#fff;
-color: #000;
-margin: 20px 30px;
-align-items:center;
+    display:flex;
+    background:#fff;
+    color: #000;
+    margin: 20px 30px;
+    align-items:center;
 
 
-img{
-    margin-top:10px;
-    background: #1c1c1c;
-    width:250px;
-    height:250px;
-}
+    img{
+        margin-top:10px;
+        background: #1c1c1c;
+        width:250px;
+        height:250px;
+    }
+    .descricao{
+            
+        }
 `;
 
 

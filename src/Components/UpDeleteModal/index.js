@@ -1,27 +1,38 @@
 import React, { useState } from 'react';
-import * as S from '../../Style/CadastroModal';
-import { BiCommentAdd } from 'react-icons/bi';
+import * as S from '../../Style/UpDeleteModal';
 import Co3d from '../../assets/Image/co3d.png';
 import api from '../../Services/Api';
 import { toast } from 'react-toastify';
 
-export default function CadastroModal() {
+export default function UpDeleModal({ dataLivro }) {
     const [show, setShow] = useState(false);
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
     const [titulo, setTitulo] = useState('');
     const [autor, setAutor] = useState('');
     const [descr, setDescr] = useState('');
-    
+    const [takeId, setTakeId] = useState('');
+
 
     const [loading, setLoading] = useState(false);
+    const [readDelete, setReadDelete] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
-    async function postLivro(nome, email, titulo, autor, descr) {
+    function TakeDados() {
+        setShow(true);
+        setNome(dataLivro.nome);
+        setEmail(dataLivro.email);
+        setTitulo(dataLivro.titulo);
+        setAutor(dataLivro.autor);
+        setDescr(dataLivro.descricao);
+        setTakeId(dataLivro.id);
+
+    }
+
+    async function handleUpdate(id, nome, email, titulo, autor, descr) {
         setLoading(true);
-        if (nome !== '' && email !== '' && titulo !== '' && autor !== '' && descr !== '') {
-            await api.post(`/livros`, {
+        if (id !== '' && nome !== '' && email !== '' && titulo !== '' && autor !== '' && descr !== '') {
+            await api.put(`/livros/${id}`, {
                 nome: nome,
                 email: email,
                 titulo: titulo,
@@ -34,9 +45,12 @@ export default function CadastroModal() {
                     setTitulo('');
                     setAutor('');
                     setDescr('');
-                    toast.success(`o livro ${titulo} foi cadastrado com sucesso!📖`);
+                    setShow(false);
+                    window.location.reload();
+                    toast.success(`o livro ${titulo} foi atualizado com sucesso!📖`);
                     setLoading(false);
-                    
+
+
 
                 }).catch((error) => {
                     setLoading(false);
@@ -51,15 +65,50 @@ export default function CadastroModal() {
         }
     }
 
+    async function handleDelete(id) {
+        setReadDelete(true);
+        if (id) {
+            await api.delete(`/livros/${id}`)
+            
+                .then(() => {
+                    setNome('');
+                    setEmail('');
+                    setTitulo('');
+                    setAutor('');
+                    setDescr('');
+                    window.location.reload();
+                    toast.success(`o livro ${titulo} foi atualizado com sucesso!📖`);
+                    setReadDelete(false);
+
+
+
+                }).catch((error) => {
+                    setReadDelete(false);
+                    console.log(error);
+                    toast.error('Houve um erro ao tentar cadastrar esse livro😥');
+
+                })
+        } else {
+            setReadDelete(false);
+            toast.info('Os campos de cadastro não podem ficar vazios!');
+            return;
+        }
+
+
+
+
+
+    }
+
     return (
         <>
-            <S.MyButton variant="primary" onClick={handleShow}>
-               <span>NOVO </span> <BiCommentAdd color='#fff' size={25} />
+            <S.MyButton variant="primary" onClick={() => TakeDados()}>
+                <S.MyGrConfigure size={35} />
             </S.MyButton>
 
             <S.MyModal show={show} onHide={handleClose}>
                 <S.MyModal.Header closeButton className='textoTop'>
-                    <S.MyModal.Title className='imgETitulo'><img src={Co3d} alt='imagem topo modal' />Novo Livro</S.MyModal.Title>
+                    <S.MyModal.Title className='imgETitulo'><img src={Co3d} alt='imagem topo modal' />Editar Livro</S.MyModal.Title>
                 </S.MyModal.Header>
                 <S.MyModal.Body className='bodyModal'>
 
@@ -85,7 +134,7 @@ export default function CadastroModal() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 value={email}
                             />
-                            
+
                         </S.MyInputGroup><br />
                         <S.MyInputGroup size="lg" className='listInputTitulo'>
                             <S.MyInputGroup.Text id="" className='textList' >Titulo</S.MyInputGroup.Text>
@@ -111,7 +160,7 @@ export default function CadastroModal() {
 
                         </S.MyInputGroup> <br />
 
-                        
+
                         <S.MyInputGroup size="lg" className='listInputDesc'>
                             <S.MyInputGroup.Text id="" className='textList' >Descrição</S.MyInputGroup.Text>
                             <S.MyForm.Control
@@ -123,16 +172,19 @@ export default function CadastroModal() {
                             />
 
                         </S.MyInputGroup><br />
-                       
+
 
                     </S.MyForm>
 
                 </S.MyModal.Body>
-                <S.MyModal.Footer>
+                <S.MyModal.Footer className='footerModal'>
+                    <S.MyButton variant="danger" onClick={() => handleDelete(takeId)}>
+                        {readDelete=== true? 'Deletando...': 'Del'}
+                    </S.MyButton>
                     <S.MyButton variant="secondary" onClick={handleClose}>
                         Close
                     </S.MyButton>
-                    <S.MyButton variant="primary" onClick={(e) => postLivro(nome, email, titulo, autor, descr)}>
+                    <S.MyButton variant="primary" onClick={() => handleUpdate(takeId, nome, email, titulo, autor, descr)}>
                         {loading === true ? 'Salvando...' : 'Save Changes'}
                     </S.MyButton>
                 </S.MyModal.Footer>

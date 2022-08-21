@@ -9,6 +9,7 @@ import GlobalStyle from './Style/globalstyles';
 import Header from './Components/Header';
 
 
+
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +18,7 @@ function App() {
     <ToastContainer autoClose={3500} theme='colored' />
     <Router/>
     <GlobalStyle/>
+    
     </>
     </BrowserRouter >
   );

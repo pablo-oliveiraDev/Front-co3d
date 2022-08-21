@@ -3,16 +3,12 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { MdOutlineSettings } from 'react-icons/md';
+
 
 
 export const MyButton = styled(Button)`
-@media(max-width:900px){
-    margin-left:30%;
-    span{
-        display:none;
-       
-    }
-}
+
 `;
 
 export const MyModal = styled(Modal)`
@@ -36,6 +32,11 @@ export const MyModal = styled(Modal)`
 
     
     }
+    .footerModal{
+        display:flex;
+        align-items:center;
+        justify-content:space-around;
+    }
 
 `;
 
@@ -55,4 +56,9 @@ export const MyInputGroup = styled(InputGroup)`
 display:flex;
 flex-direction:column;
 }
+
+`;
+export const MyGrConfigure = styled(MdOutlineSettings)`
+   
+
 `;
